@@ -47,7 +47,30 @@
 4 	09/03/2015 	POS tagging and HMMs (MC)
 5 	16/03/2015 	Language Models (EA) 
 6 	23/03/2015 	Machine Translation (MC) 	
-7 	30/03/2015 	Lexical Semantics (EA)	
+7 	30/03/2015 	Lexical Semantics (EA)
+
+	Word similarity measures:
+	- thesaurus based
+		* path-length similarity (some function of the #edges between two words in the graph defined by the thesaurus)
+			word similarity is usually defined as the maximum of the word sense similarity
+			assumption: each link in the network represents a uniform distance
+		* information-content word-similarity (add probabilistic information derived from the corpus to the structure of the thesaurus)
+			Resnik similarity: information content of the lowest common subsumer
+			Lin similarity: ratio between commonality (twice the information content of the lowest subsumer) and full description of the words (sum of their information contents)
+			Jiang-Conrath distance: difference between commonality and full description
+	- dictionary based (d.h. no structure information used, only the glosses)
+			Extended Lesk measure (or extended gloss overlap)
+	- distributional
+		TODO
+	- graph based
+		* Agirre: calculate a personalized page-rank for each word, compare words by comparing their distributions
+	- knowledge based
+		Roget's thesaurus (no description), Wikipedia (no description)
+	Word similarity and word relatedness
+	- two words are similar if they are nearly synonyms
+	- two words are related if they are somehow related to each other (antonyms, meronyms, holonyms, ...)
+
+	
 8 	20/04/2015 	Text Summarization (EA) 
 9 	27/04/2015 	Event Understanding (EA) 
 10 	04/05/2015 	Grammars and Parsing (MC) 	
