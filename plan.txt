@@ -1,0 +1,54 @@
+1 	16/02/2015 	Introduction & Project overview (EA,MC)
+
+    Challenges are:
+    - Ambiguity (at all levels)
+	- Sparsity
+	- World knowledge
+	Levels:
+	- Words (tokenization, in English there are whitespaces, in Chinese it's even more difficult)
+	- Syntax
+	- Semantics
+	- Discourse
+
+	
+2 	23/02/2015 	Entity Disambiguation (MC)  -- NOT IN THE EXAM
+
+    An entity is one "thing" uniquely identifiable in a knowledge base
+	Challenges:
+	- Ambiguity (same word means different things)
+	- Variability (different words mean the same thing)
+	Named Entity Recognition (recognize and tag named entities such as 'Bank of America' - organization)
+	Word Sense Disambiguation (which meaning of the word is used in a particular sentence)
+		most used corpus: WordNet
+	Approaches:
+	- Wikipedia-based entity linking (that with Lara Croft)
+	- TagME
+	- Optimization (with integer linear programming)
+	- Structured learning (joint mention detection, svm)
+	- Graph based (solution belongs to dense subgraph or has higher page rank)
+	- Topic modeling
+	- Piggyback
+	- LDA (Latent Dirichlet allocation, represent a document as a mixture of a small number of topics and each word is attributable to one of the document's topics)
+		The topics distribution is assumed to have a Dirichlet prior
+	Similarity functions:
+	- Link based (Google similarity)
+	- Count based (pmi(x,y) = log(p(x,y) / p(x)p(y)))
+	Eval metrics:
+	- Precision = tp / (tp+fp)  | in the book: (#correct chunks given by the system) / (#chunks given by the system)
+	- Recall = tp / (tp + fn)   | in the book: (#correct chunks given by the system) / (#actual chunks in the text)
+	- F1 = 2*Precision*Recall / (Precision + Recall) = harmonic mean of precision and recall
+	
+
+3 	02/03/2015 	Finite State Automata and Morphology (EA)
+
+
+
+
+4 	09/03/2015 	POS tagging and HMMs (MC)
+5 	16/03/2015 	Language Models (EA) 
+6 	23/03/2015 	Machine Translation (MC) 	
+7 	30/03/2015 	Lexical Semantics (EA)	
+8 	20/04/2015 	Text Summarization (EA) 
+9 	27/04/2015 	Event Understanding (EA) 
+10 	04/05/2015 	Grammars and Parsing (MC) 	
+11 	11/05/2015 	Statistical and Dependency Parsing (MC)	-- DEPENDENCY PARSING NOT IN THE EXAM
