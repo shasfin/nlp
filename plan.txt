@@ -41,6 +41,93 @@
 
 3 	02/03/2015 	Finite State Automata and Morphology (EA)
 
+	Mathematiker, Logiker, Informatiker:
+	-Gottlob Frege: formale Sprache
+	-David Hilbert: versucht widerspruchsfreie Axiomatisierung der Mathematik
+	-Bertrand Russel: Typentheorie, Entscheidungsproblem
+	-Alfred Whitehead: Logik (mit B.Russel)
+	-Kurt Gödel: Prädikatenlogik, Unvollständigkeitssätze
+	-Alan Turing: Turingmaschine, Turing-Test
+	-Claude Shannon: Informationstheorie
+	-Noam Chomsky: Grammatik, Sprachenhierarchie
+	Chomsky-Hierarchie:
+	- type 0 | unrestricted | Turing machine
+	- type 1 | context sensitive | Linear bounded automaton
+	- type 2 | context free | pushdown automaton
+	- type 3 | regular | finite automaton
+	Regular languages (definition)
+	- the empty language is regular
+	- the language containing only the empty word is regular
+	- the language containing only one symbol of the alphabet is regular
+	- if L1 and L2 are regular languages, then also their concatenation, their union and their Kleene closure are regular languages
+	Regular expressions (Perl syntax)
+	- /word/   -> matches "word"
+	- /[word]/ -> disjunction, matches "w" "o" "r" or "d"
+	- /[0-5]/  -> disjunction with a range, matches "0", "1", "2", ... or "5"
+	- /[Ww]ord/ -> matches "Word" or "word"
+	- /[^wm]ord/ -> matches "Word", "lord", "aord"..., any word with 4 symbols where the first one is NOT "w" and NOT "m" and the last three are "ord"
+	- /[w^]ord/ -> matches "word" or "^ord" (caret has a special meaning only at the beginning of a square brace)
+	- /^[Ww]ord$/ -> matches only a stream containing "Word" or "word" without other symbold before or after (e.g. a line containing only "Word")
+	- /\d/ -> matches any digit
+	- /\D/ -> matches any non-digit
+	- /\w/ -> matches any alphanumerit symbol or underscore
+	- /\W/ -> matches any non-alphanumeric
+	- /\s/ -> matches a whitespace (tab, newline,...)
+	- /\S/ -> matches non-whitespace
+	- /w*ord/ -> matches "ord" or "word" or "wword" or "wwword" or ...
+	- /w+ord/ -> matches "word" or "wword" or "wwword" or ...
+	- /w?ord/ -> matches "ord" or "word" and nothing else
+	- /.word/ -> matches "Lord" or "!ord" or "7ord" or... any word with 4 symbols where the last three are "ord"
+	- /(word)|(book)/ -> matches either "word" or "book"
+	- /word|book/ -> matches either "wordook" or "worbook"
+	- escape special symbols (*,|,.,+,?,...) with a backslash if you want to use them as normal symbols
+	- /word?/ -> matches "wor" or "word"
+	- /word\?/ -> matches "word?"
+	Finite-State Automata
+	Morphology
+	- morphemes are divided into two classes: stems and affixes
+	- inflectional morphology: combine stems and affixes so that the resulting word has the same word class and is transparently related to the original word, although gramatically/semantically different (e.g. walk-walks-walked, word-words)
+	- derivational morphology: combine stems and affixes so that the resulting word has (usually but not always) another word class and a not so easy predictable meaning (e.g. computerize-computerization, kll-killer, clear-uncler, happy-happier-happiest)
+	English inflectional morphology
+	- nouns: markers for plural and possessive
+	- verbs: present simple 3rd singular, perfect, preterite and progressive/gerund
+	- there are regulars, regulars with somewhat more complex rules and irregulars. New words are almost always regular
+	English derivational morphology
+	- very complicated and difficult to capture exactly, has a quasi-systematic structure and impredictable meaning and contraints (e.g. unclear is ok, unbig is not English)
+	Finite State Automata for Morphology:
+	- big, complicated and error-prone, capture well the regular part of the inflectional morphology
+	Finite State Transducers for Morphology
+	- more powerful than finite-state automata
+	- can be seen as recognizer of a relation, as generator (generates a sequence of pairs), as translator (translate one sequence into another), as set relator (computer a relation)
+	- we can apply more FST one after the other, translating a lexical form into an intermediate form into a surface form (or back for morphological analysis)
+	- in FST the path to an accept state does matter, since it represents a different parse (cfr un-ion-ize-able and union-ize-able)
+		how to deal with ambiguity:
+		* simply take the first ouput
+		* find all the possible outputs and return them all
+		* bias the search so that only one or a few likely paths are explored
+	- we can compose two FST into one FST, but the number of state will increase a lot
+		* create a set of new states that correspond to each pair of sttes from the original machines
+		* create a new transition function d3 from d2 and d1 so that d3((xa,ya),i:o) = (xb,yb) iff there is a c such that d1(xa,i:c) = xb and d2(ya,c:o) = yb where i,o,c are tape symbols and xa,ya,xb,yb are states
+	Flex
+	- we can build a flex scanner to recognize words from a dictionary dump (achtung performance, do not use too many words)
+	- or we can lemmatize the words writing some hand-written rules (cfr. Porter Stemmer)
+	Tokenization
+	- divide text up into tokens. In English you could do it using space and punctuation as word boundary (and have problems with Mr. Dr. 23.4 and similar), in Chinese it is even harder (maximum matching is a good baseline)
+	- in English usually solved with simple regular expressions to deal with possessive markers and clitics (I've, don't, you'll), numbers, abbreviations, quotations and punctuation
+	- combined with Named Entity Recognizers
+	Sentence splitting
+	- some markers (?,!) are unambiguous, other (.,,) are ambiguous.
+	Spelling correction
+	- non-word error: the error results in a non-existing word (e.g. graffe for giraffe)
+	- real-word error: the error results in a real word (e.g. "Do you want apples OF pineapples" for "Do you want apples OR pineapples")
+	- isolated-word error correction: correct the word looking only at the word itself (without looking at the context)
+		operations: insertion, deletion, substitution
+		find closest dictionary word in terms of edit distance
+	- context-dependent error detection and correction: look at the context (the only way to detect and correct real-word errors)
+	
+	
+	
+	
 
 
 
@@ -61,14 +148,19 @@
 	- dictionary based (d.h. no structure information used, only the glosses)
 			Extended Lesk measure (or extended gloss overlap)
 	- distributional
-		TODO
+		Depends on the context
+		For each word, collect contexts where the word appears, represent each word as a vector of frequencies where each dimension represents a context
+		Apart from contextual windows, we can also use other information (bag-of-words, parsing information, POS tags etc.)
+		As always, raw frequencies are not the best measure (there are more frequent contexts)
+		* assoc(w,f) measures the association between the word w and the (context) feature f
+		* sim(v,w) measures the similarity between the vectors representing two words v and w
 	- graph based
 		* Agirre: calculate a personalized page-rank for each word, compare words by comparing their distributions
 	- knowledge based
 		Roget's thesaurus (no description), Wikipedia (no description)
 	Word similarity and word relatedness
 	- two words are similar if they are nearly synonyms
-	- two words are related if they are somehow related to each other (antonyms, meronyms, holonyms, ...)
+	- two words are related if they are somehow related to each other (antonyms, meronyms, holonyms, ... or are usually used in the same context)
 
 	
 8 	20/04/2015 	Text Summarization (EA) 
