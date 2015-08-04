@@ -125,13 +125,20 @@
 		find closest dictionary word in terms of edit distance
 	- context-dependent error detection and correction: look at the context (the only way to detect and correct real-word errors)
 	
-	
-	
-	
-
-
 
 4 	09/03/2015 	POS tagging and HMMs (MC)
+
+	Word classes
+	- open word class: generally big, new words can be invented.
+		noun, verb, adjective, adverb
+		not all languages have all four of them (but many of them do)
+	- closed word class: small stable set of function words
+		prepositions, determiners, pronouns, conjunctions, auxiliary verbs, particles, numerals
+	TODO
+
+
+
+
 5 	16/03/2015 	Language Models (EA) 
 6 	23/03/2015 	Machine Translation (MC) 	
 7 	30/03/2015 	Lexical Semantics (EA)
