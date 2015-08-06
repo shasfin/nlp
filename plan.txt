@@ -252,4 +252,11 @@
 	- like CFG, they have terminals, non-terminals, production rules and a starting symbol. But they have probabilities on the rules. For example, in A -> beta[p], p = P(beta|A) (and must sum up to one)
 	- if we are designing a PCFG, how do we choose the probabilities? One possibility is to use counts from treebanks (corpora annotated with trees). For the unsupervised case estimate expected counts.
 	- Limitations: independence from the context assumptions (the estimated probabilities for different trees can be equal, although the true ones are very different), lack of conditioning on lexical information, by PP attachment a PCFG will always prefer one attachment type
-	
+	Lexicalized PCFGs
+	- PCFGs augmented to allow lexicalized rules
+	- Charniak, Collins
+	- Non-terminals annotated with lexical head (and the non-terminal of the head)
+	- Problems: sparsity (rules are so specific that they are not observed in the corpus)
+		Collins Model 1: assume independence, generate the head first, then dependents inside-out (it's just a product of all the probabilities of the head, of what is left and what is right)
+	Evaluation
+	- compare to human gold standard trees
