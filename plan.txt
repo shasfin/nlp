@@ -158,7 +158,40 @@
 		Partial parsing (chunking)
 
 
-5 	16/03/2015 	Language Models (EA) 
+5 	16/03/2015 	Language Models (EA)
+
+	Language model: something that assesses P(wn | w1,w2,...,w{n-1})
+	N-gram models: approximate this probability looking only at the previous N-1 words
+		apply definition of conditional probability and count
+		apply chain rule
+		problem with easy count: 0 and 0/0 (sparsity)
+		Evaluation
+		- intrinsic evaluation
+			for example perplexity (the lower the better): P(w1,w2,...,wN)^{-1/N}
+			some approximation measure, just because extrinsic evaluation is so expensive and time-consuming
+		- extrinsic evaluation
+			embed into some end-to-end application, see if it does better with the new model
+	Smoothing (address the sparsity and the zero counts)
+	- Laplace Smoothing (add-one)
+		real counts: c_i
+		mle probability estimated from the real counts: c_i/N
+		laplace counts: c*_i = (c_i+1) N/(N+V) // V is the vocabulary size
+		laplace probability estimated from the real counts: (c_i+1)/(N+V)
+		as always, we give some probability to the low-probability events by taking some probability away from the high-probability events
+		laplace bigram probabilities: (c(w{n-1},wn)+1) / (c(w{n-1}+V)
+		not used in practice for N-gram counts
+	- Good Turing
+		intuition: use the count of things we've seen once to help estimate the count of things we've never seen
+		notation: N_x := number of fish species seen x times
+		c*_0 = c_1 (use number of species we've seen once to estimate total number of unseen species)
+		missing mass (probability mass for all of the unseen events) N_1/N
+		c* = (c+1) N_{c+1}/N_c (adjust down all other estimates to get some probability)
+		in practice often assume c>k are reliable
+	Backoff and Interpolation (use lowerN-grams)
+	- Backoff: use only highestN-grams, when available (Katz, don't forget to discount the probabilities, they should still sum up to one)
+	- Interpolation: use all the counts, interpolate among them (e.g. linearly) (use held-out development set to set the parameters)
+
+
 6 	23/03/2015 	Machine Translation (MC) 	
 7 	30/03/2015 	Lexical Semantics (EA)
 
