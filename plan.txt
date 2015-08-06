@@ -126,7 +126,7 @@
 	- context-dependent error detection and correction: look at the context (the only way to detect and correct real-word errors)
 	
 
-4 	09/03/2015 	POS tagging and HMMs (MC)
+4 	09/03/2015 	POS-tagging and HMMs (MC)
 
 	Word classes
 	- open word class: generally big, new words can be invented.
@@ -134,9 +134,28 @@
 		not all languages have all four of them (but many of them do)
 	- closed word class: small stable set of function words
 		prepositions, determiners, pronouns, conjunctions, auxiliary verbs, particles, numerals
-	TODO
-
-
+	Part-of-Speech-tagging (POS-tagging)
+	- POS tagset (coarse, Penn Treebank, ...)
+	- Rule-based tagging (start with a dictionary, assign all possible tags, introduce rules to reduce ambiguity)
+	- Statistical (or Stochastic?) models for POS-tagging
+		Supervised: annotated training set
+		Semisupervised: a part of the training set is annotated
+		Unsupervised: only raw text available
+	HMM (can be used for supervised POS-tagging) (kind of FSAs with emission probabilities and where the states are "hidden")
+	- they have states, observations, transitions with transition probabilities (A) and emissions with emission probabilities (B)
+	- Markov assumptions: limited horizon (state depends only on previous state), time-invariant, observation depends only on the state
+	- Three tasks:
+		1. given an observation, find the most likely sequence of states (decoding) -> Viterbi (max)
+		2. given an observation, compute its probability (observation probability) -> forward or backward (sum)
+		3. given a dataset of observations, estimate the model's parameters (parameter estimation) -> Baum-Welch (aka forward-backward)
+	Bayesian HMM (additional parameter to control sparsity of A and B)
+	Information Extraction
+	-Segmentation and Labeling (BIO and your favourite classifier, features from the context and also from other sources like gazetteers)
+		NER
+		Temporal expressions
+		*more regular patterns
+		*challenging task: normalization (map to interval or point on the timeline)
+		Partial parsing (chunking)
 
 
 5 	16/03/2015 	Language Models (EA) 
