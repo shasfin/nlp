@@ -259,7 +259,22 @@
 
 	
 8 	20/04/2015 	Text Summarization (EA) 
-9 	27/04/2015 	Event Understanding (EA) 
+9 	27/04/2015 	Event Understanding (EA)
+
+	Named Entity Recognition (NER) and Classification
+	- BIO encoding and your favourite classifier based on contextual features
+	Relation detection
+	- funny lightly-supervised "Münchhausen" method
+	Event Understanding
+	- template filling (supervised)
+	Open IE
+	- self-supervising
+	- has a query processor ;)
+	- second edition much simpler, uses regular expressions
+	- there is a Wikipedia-based Open Extractor
+	- web-tables (extract tables from web pages. Alas, most tables are not meaningful to us)
+
+
 10 	04/05/2015 	Grammars and Parsing (MC)
 
 	Syntax
