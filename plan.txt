@@ -167,7 +167,7 @@
 		Roget's thesaurus (no description), Wikipedia (no description)
 	Word similarity and word relatedness
 	- two words are similar if they are nearly synonyms
-	- two words are related if they are somehow related to each other (antonyms, meronyms, holonyms, ... or are usually used in the same context)
+	- two words are related if they are somehow related to each other (antonyms, meronyms, holonyms, ...) or are usually used in the same context)
 
 	
 8 	20/04/2015 	Text Summarization (EA) 
@@ -193,6 +193,9 @@
 		* lexicon rules are those where the rhs does not contain non-terminals
 		* can be automatically rewritten into Chomsky-Normal Form (CNF)
 			CNF allows only two types of rules: A -> B C and A -> w
+			1. convert unit productions replacing A -> B with A -> beta for each rule B -> beta
+			2. convert terminals to dummies replacing A -> beta b gamma with A -> beta X gamma and X -> b
+			3. make rules binary
 		* CFGs can be used for
 			generating strings in the language
 			rejecting strings not in the language
@@ -230,5 +233,23 @@
 		Earley: another algorithm for parsing, a top-down one
 	
 
- 	
 11 	11/05/2015 	Statistical and Dependency Parsing (MC)	-- DEPENDENCY PARSING NOT IN THE EXAM
+
+	Probabilistic CFGs (PCFG)
+	- CFGs augmented with probabilities on rules
+	- can be used to resolve ambiguity because they assign a probability to each parse tree
+		probability of a parse T of a sentence S is the product of the probabilities of all n rules used to expand each of the n non-terminal nodes in the parse T
+		* P(T,S) = prod_i(P(RHSi|LHSi)), where the i-th rule is given by LHSi -> RHSi
+		tree with max probability
+		* T*(S) = argmax_T(P(T|S)) = argmax_T(P(T,S)/P(S)) = argmax_T(P(T,S)) = argmax_T(P(T)*P(S|T)) = argmax_T(P(T)*1) = argmax_T(P(T))
+	- can be used to produce a language model since it assignes a probability to the words constituting a sentence
+		probability of a sentence is the sum of the probabilities of all parse trees for the sentence
+		* P(S) = sum_{T s.t. S=yield(T)}(P(T,S)) = sum_{T s.t. S=yield(T)}(P(T))
+		probability of the next word w_i given all the words we have seen so far (apply definition of conditional probability)
+		* can be approximated using bigrams (condition only on the last word)
+	Probabilistic CKY
+	- add another dimension to the table. In the cell [i,j,A] store the probability of an A spanning [i,j]
+	- like CFG, they have terminals, non-terminals, production rules and a starting symbol. But they have probabilities on the rules. For example, in A -> beta[p], p = P(beta|A) (and must sum up to one)
+	- if we are designing a PCFG, how do we choose the probabilities? One possibility is to use counts from treebanks (corpora annotated with trees). For the unsupervised case estimate expected counts.
+	- Limitations: independence from the context assumptions (the estimated probabilities for different trees can be equal, although the true ones are very different), lack of conditioning on lexical information, by PP attachment a PCFG will always prefer one attachment type
+	
