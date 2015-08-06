@@ -258,7 +258,44 @@
 	- two words are related if they are somehow related to each other (antonyms, meronyms, holonyms, ...) or are usually used in the same context)
 
 	
-8 	20/04/2015 	Text Summarization (EA) 
+8 	20/04/2015 	Text Summarization (EA)
+
+	-Extractive: synthesize from the sentences from the text
+	-Abstractive: use "your own words"
+	-Single-document: only one source
+	-Multi-document: many sources to the same topic
+	-Length (headline, highlights, longer text)
+	-Focus (generic/query-focused/opinion-focused)
+	-...
+	Summarization architecture
+	1. Content selection
+	2. Information ordering
+	3. Sentence resolution/compression
+	Summarization based on Rhetorical Parsing
+	- Rhetorical Structure Theory (RST): mostly about relations that hold between nucleus and satellite
+		evidence, attribution, elaboration, contrast, list, concession, background, condition
+	- Parse the input text with a discourse parser, keep the summary of immediate nucleus children
+	Unsupervised content selection
+	- build a model of important words, select the sentences with most important words
+	- common strategies to measure word importance:
+		tf-idf (more weight to frequent word in one document that are rare in the collection as a whole)
+		log-likelihood ratio
+		LDA and topic models
+	Supervised content selection
+	- binary classification or sentence ranking
+	Redundancy removal
+	- Maximal Marginal Relevance (MMR): penalize sentences that are similar to already-selected sentences
+	Information ordering (chronological, lexical cohesion, centering theory)
+	Query-focused summarization (include information from the query)
+	Sentence compression (shorten sentences based on their parse tree)
+	- search for a dependency subtree under a length constraint in the transformed dependency graph
+	- ILP-based compression method: find a subtree rooted in root with the maximum total sum of edge weights w(e) under a character length limit
+	- fast compressor (train a max-ent model to decide, at each node, which edges to keep)
+	Intrinsic evaluation of text summarization
+	- Pyramid: identify the Summary Content Units, count them in manually generated summaries (for computing the weights of each SCU) and in the automatic summary (weight the SCU with the weights)
+	- ROUGE (automatic measure, recall-oriented (against gold)
+
+
 9 	27/04/2015 	Event Understanding (EA)
 
 	Named Entity Recognition (NER) and Classification
