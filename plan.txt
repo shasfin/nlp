@@ -172,5 +172,63 @@
 	
 8 	20/04/2015 	Text Summarization (EA) 
 9 	27/04/2015 	Event Understanding (EA) 
-10 	04/05/2015 	Grammars and Parsing (MC) 	
+10 	04/05/2015 	Grammars and Parsing (MC)
+
+	Syntax
+	- Key concepts
+		Constituency
+		* a constituent is some group of words acting as a unit (phrase)
+		* external evidence:
+			constituents sometimes can be moved around in the sentence, but the words forming them must stay together
+			constituents can do something that not all word forming the constituent can (e.g. precede verbs)
+		* internal evidence:
+			the structure of the constituent, e.g. Det + Noun
+		Head
+		* most "important" word of a constituent
+		Subcategorization and agreement
+		Grammatical relations and Dependency
+	- Key formalism
+		Context-free grammars (CFG)
+		* they have terminals (actual English words), non-terminals (some symbols like NP, corresponding to constituents) and productions (rules that say how a particular non-terminal can be expanded into something else). There is also a special non-terminal symbol: the start symbol S.
+		* lexicon rules are those where the rhs does not contain non-terminals
+		* can be automatically rewritten into Chomsky-Normal Form (CNF)
+			CNF allows only two types of rules: A -> B C and A -> w
+		* CFGs can be used for
+			generating strings in the language
+			rejecting strings not in the language
+			associating syntactic trees to strings in the language
+		* problems and limitations
+			don't capture agreement and subcategorization constraints (it is possible to generate grammars that do not overgenerate, but they would be huge)
+		* summary:
+			can be used to model various facts abouts the syntax of a language
+			used together with parsers in many applications
+			the key phenomenon of constituency can be easily captured with CFGs
+			agreement and subcategorization pose significant problems (splitting the rules does not scale)
+	- English grammar fragment
+		sentence types: declarative, imperative, questions (yes/no questions, wh-questions)
+		noun phrase: a head and some modifiers tied together according to some ordering constraints
+		* pre-modifiers: articles, numerals, quantifiers, possessives, adjectives and nouns
+		* post-modifiers: prepositional phrases, non-finite clauses (e.g. "arriving before noon"), relative clauses (e.g. "hat serve breakfast"), appositives
+		agreement: constraints holding among various constituents (e.g. number agreement in NPs, person agreement in VPs)
+		verb phrase: a head verb and 0 or more argument constituents
+		* subcategorization: subcategorize verbs according to their argument pattern (e.g. transitive/intransitive and so on)
+	- Parsing
+		assign a tree to an input string s.t. all and only the elements of the input are covered and has an S at the top
+		problem: select the correct tree among all the possible trees (deal with ambiguity)
+		top-down: start with S, apply grammar rules trying to derive the input string
+		* only searches for valid sentences (with an S on top and derived following the rules)
+		* but explores also trees that are not consistent with any of the input words
+		bottom-up: start with subtrees covering only part of the input (at the beginning a subtree for each word), combine subtrees into larger trees following the rules "backward"
+		* only forms trees consistent with the input words
+		* but explores structure which won't lead to valid sentences
+		CKY: easy bottom-up dynamic programming algorithm for parsing, requires the CFGs to be in CNF
+		* build a table so that a non-terminal A spanning from i to j in the input is placed in cell [i,j]
+		* if there is an A spanning i,j in the input and A->BC is a rule in the grammar then there must be a B in [i,k] and a C in [k,j] for i<k<j
+		* if you have backpointers, you can retrieve a tree from the table. Allow multiple versions of the same non-terminal (ambiguity).
+		* since the grammar is in CNF, it is a different tree (not the parse tree we are looking for), but it can be automatically transformed into the tree we are looking for
+		* the resulting tree is ambiguous (we can actually read out more than one tree from the table) --> maybe model it with probabilities?
+		Earley: another algorithm for parsing, a top-down one
+	
+
+ 	
 11 	11/05/2015 	Statistical and Dependency Parsing (MC)	-- DEPENDENCY PARSING NOT IN THE EXAM
