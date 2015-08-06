@@ -192,7 +192,43 @@
 	- Interpolation: use all the counts, interpolate among them (e.g. linearly) (use held-out development set to set the parameters)
 
 
-6 	23/03/2015 	Machine Translation (MC) 	
+6 	23/03/2015 	Machine Translation (MC)
+
+	Direct
+	- word-per-word, maybe with local reordering rules
+	Syntactic transfer
+	- use syntactic parse trees and rules to convert the trees
+	Interlingua
+	- go to some universal representation and generate a foreign sentence from the representation
+	Compromise between faithfulness and fluency
+	Statistical Machine Translation (SMT)
+	- best E = argmax_E P(F|E) P(E) // P(F|E) is the translation model (faithfulness), P(E) is the language model (fluency)
+	- phrase-based
+	- word alignment, spurious words
+	Noisy channel model
+	IBM Model 1
+	- Generative story
+		1. Choose length J of the foreign sentence
+		2. Choose alignment A (assume all alignments have uniform probability)
+		3. for each j choose f_j according to translation table (each foreign word maps to exactly one English word)
+	- Probabilistic model
+		P(F,A|E) = P(F|E,A)P(A|E)
+		P(F|E) = sum_A P(F,A|E)
+		each alignment is independent, so we can maximize the dimensions independently
+	- EM alignment training
+		1. List all alignments, initialize somehow the probabilities t(f_j|e_{a_j})
+		2. E-Step: compute the probability of alignments
+			P(A|E,F) = P(A,F|E)/P(F|E) = P(A,F|E)/sum_A P(A,F|E)
+			P(A,F|E) = prod_j t(f_j|e_{a_j})
+		3. M-Step: collect (fractional) counts, normalize
+		4. Iterate steps 2 and 3 until convergence
+	Symmetrization
+	- approximate alignment where the constraint (foreign -> English is injective) does not hold
+	- can construct a phrase table from the alignment
+	Decoding (A*, best-first, stack decoding)
+	Evaluation (human rating or BLEU, NIST, TER, METEOR)
+
+
 7 	30/03/2015 	Lexical Semantics (EA)
 
 	Word similarity measures:
